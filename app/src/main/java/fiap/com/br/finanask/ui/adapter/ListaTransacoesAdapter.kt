@@ -1,12 +1,14 @@
 package fiap.com.br.finanask.ui.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import fiap.com.br.finanask.R
 import fiap.com.br.finanask.extension.formataBrasileiro
+import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
 import kotlinx.android.synthetic.main.transacao_item.view.*
 
@@ -23,6 +25,14 @@ class ListaTransacoesAdapter(transacoes: List<Transacao>,
         val viewCriada = LayoutInflater.from(context).inflate(R.layout.transacao_item, parent, false)
 
         val transacao = transacoes[position]
+
+        if (transacao.tipo == Tipo.RECEITA) {
+            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.receita))
+            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_receita)
+        } else {
+            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.despesa))
+            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_despesa)
+        }
 
         viewCriada.transacao_valor.text = transacao.valor.toString()
         viewCriada.transacao_categoria.text = transacao.categoria
@@ -50,3 +60,5 @@ class ListaTransacoesAdapter(transacoes: List<Transacao>,
 
     }
 }
+
+
