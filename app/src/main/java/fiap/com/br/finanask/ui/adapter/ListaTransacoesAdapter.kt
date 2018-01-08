@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import fiap.com.br.finanask.R
 import fiap.com.br.finanask.extension.formataBrasileiro
+import fiap.com.br.finanask.extension.formataParaBrasileiro
+import fiap.com.br.finanask.extension.limitaEmAte
 import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
 import kotlinx.android.synthetic.main.transacao_item.view.*
@@ -20,6 +22,7 @@ class ListaTransacoesAdapter(transacoes: List<Transacao>,
 
     private val transacoes = transacoes
     private val context = context
+    private val limiteDaCategoria = 14
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val viewCriada = LayoutInflater.from(context).inflate(R.layout.transacao_item, parent, false)
@@ -34,11 +37,13 @@ class ListaTransacoesAdapter(transacoes: List<Transacao>,
             viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_despesa)
         }
 
-        viewCriada.transacao_valor.text = transacao.valor.toString()
-        viewCriada.transacao_categoria.text = transacao.categoria
 
-        val dataFormatada = transacao.data.formataBrasileiro()
-        viewCriada.transacao_data.text = dataFormatada
+
+
+
+        viewCriada.transacao_valor.text = transacao.valor.formataParaBrasileiro()
+        viewCriada.transacao_categoria.text = transacao.categoria.limitaEmAte(limiteDaCategoria)
+        viewCriada.transacao_data.text = transacao.data.formataBrasileiro()
 
 
 
