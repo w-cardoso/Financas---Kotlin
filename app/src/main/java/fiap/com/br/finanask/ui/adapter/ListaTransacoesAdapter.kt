@@ -17,11 +17,10 @@ import kotlinx.android.synthetic.main.transacao_item.view.*
 /**
  * Created by re034850 on 19/12/2017.
  */
-class ListaTransacoesAdapter(transacoes: List<Transacao>,
-                             context: Context) : BaseAdapter() {
+class ListaTransacoesAdapter(private val transacoes: List<Transacao>,
+                             private val context: Context) : BaseAdapter() {
 
-    private val transacoes = transacoes
-    private val context = context
+
     private val limiteDaCategoria = 14
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
@@ -29,26 +28,45 @@ class ListaTransacoesAdapter(transacoes: List<Transacao>,
 
         val transacao = transacoes[position]
 
-        if (transacao.tipo == Tipo.RECEITA) {
-            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.receita))
-            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_receita)
-        } else {
-            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.despesa))
-            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_despesa)
-        }
+        adicionaValor(transacao, viewCriada)
 
+        adicionaIcone(transacao, viewCriada)
 
+        adicionaCategoria(viewCriada, transacao)
 
-
-
-        viewCriada.transacao_valor.text = transacao.valor.formataParaBrasileiro()
-        viewCriada.transacao_categoria.text = transacao.categoria.limitaEmAte(limiteDaCategoria)
-        viewCriada.transacao_data.text = transacao.data.formataBrasileiro()
-
-
-
+        adicionaData(viewCriada, transacao)
 
         return viewCriada
+    }
+
+    private fun adicionaData(viewCriada: View, transacao: Transacao) {
+        viewCriada.transacao_data.text = transacao.data.formataBrasileiro()
+    }
+
+    private fun adicionaCategoria(viewCriada: View, transacao: Transacao) {
+        viewCriada.transacao_categoria.text = transacao.categoria.limitaEmAte(limiteDaCategoria)
+    }
+
+    private fun adicionaIcone(transacao: Transacao, viewCriada: View) {
+        if (transacao.tipo == Tipo.RECEITA) {
+
+            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_receita)
+        } else {
+
+            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_despesa)
+        }
+    }
+
+    private fun adicionaValor(transacao: Transacao, viewCriada: View) {
+        if (transacao.tipo == Tipo.RECEITA) {
+            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.receita))
+
+        } else {
+            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.despesa))
+
+        }
+
+        viewCriada.transacao_valor.text = transacao.valor.formataParaBrasileiro()
     }
 
 

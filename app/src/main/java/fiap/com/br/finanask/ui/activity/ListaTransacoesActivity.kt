@@ -15,11 +15,21 @@ class ListaTransacoesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_transacoes)
 
-        val transacoes = listOf(
+        val transacoes = transacoesDeExemplo()
+
+
+        configuraLista(transacoes)
+    }
+
+    private fun transacoesDeExemplo(): List<Transacao> {
+        return listOf(
+                Transacao(valor = BigDecimal(100.0), categoria = "Economia Baseada em Bitcoin", tipo = Tipo.RECEITA),
+                Transacao(valor = BigDecimal(300.0), categoria = "Comida", tipo = Tipo.DESPESA),
                 Transacao(valor = BigDecimal(100.0), categoria = "Economia Baseada em Bitcoin", tipo = Tipo.RECEITA),
                 Transacao(valor = BigDecimal(300.0), categoria = "Comida", tipo = Tipo.DESPESA))
+    }
 
-
+    private fun configuraLista(transacoes: List<Transacao>) {
         lista_transacoes_listview.adapter = ListaTransacoesAdapter(transacoes, this)
     }
 }
