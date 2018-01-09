@@ -14,12 +14,8 @@ import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
 import kotlinx.android.synthetic.main.transacao_item.view.*
 
-/**
- * Created by re034850 on 19/12/2017.
- */
 class ListaTransacoesAdapter(private val transacoes: List<Transacao>,
                              private val context: Context) : BaseAdapter() {
-
 
     private val limiteDaCategoria = 14
 
@@ -39,34 +35,42 @@ class ListaTransacoesAdapter(private val transacoes: List<Transacao>,
         return viewCriada
     }
 
-    private fun adicionaData(viewCriada: View, transacao: Transacao) {
-        viewCriada.transacao_data.text = transacao.data.formataBrasileiro()
+    private fun adicionaValor(transacao: Transacao, viewCriada: View) {
+
+        val cor: Int = corPorTipo(transacao.tipo)
+        viewCriada.transacao_valor.setTextColor(cor)
+
+        viewCriada.transacao_valor.text = transacao.valor.formataParaBrasileiro()
+    }
+
+    private fun corPorTipo(tipo: Tipo): Int {
+        if (tipo == Tipo.RECEITA) {
+
+            return ContextCompat.getColor(context, R.color.receita)
+        }
+        return ContextCompat.getColor(context, R.color.despesa)
+
+    }
+
+    private fun adicionaIcone(transacao: Transacao, viewCriada: View) {
+        val icone = iconePor(transacao.tipo)
+        viewCriada.transacao_icone.setBackgroundResource(icone)
+    }
+
+    private fun iconePor(tipo: Tipo): Int {
+        if (tipo == Tipo.RECEITA) {
+            return R.drawable.icone_transacao_item_receita
+        }
+        return R.drawable.icone_transacao_item_despesa
+
     }
 
     private fun adicionaCategoria(viewCriada: View, transacao: Transacao) {
         viewCriada.transacao_categoria.text = transacao.categoria.limitaEmAte(limiteDaCategoria)
     }
 
-    private fun adicionaIcone(transacao: Transacao, viewCriada: View) {
-        if (transacao.tipo == Tipo.RECEITA) {
-
-            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_receita)
-        } else {
-
-            viewCriada.transacao_icone.setBackgroundResource(R.drawable.icone_transacao_item_despesa)
-        }
-    }
-
-    private fun adicionaValor(transacao: Transacao, viewCriada: View) {
-        if (transacao.tipo == Tipo.RECEITA) {
-            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.receita))
-
-        } else {
-            viewCriada.transacao_valor.setTextColor(ContextCompat.getColor(context, R.color.despesa))
-
-        }
-
-        viewCriada.transacao_valor.text = transacao.valor.formataParaBrasileiro()
+    private fun adicionaData(viewCriada: View, transacao: Transacao) {
+        viewCriada.transacao_data.text = transacao.data.formataBrasileiro()
     }
 
 
