@@ -3,10 +3,13 @@ package fiap.com.br.finanask.ui.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import fiap.com.br.finanask.R
+import fiap.com.br.finanask.extension.formataParaBrasileiro
 import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
+import fiap.com.br.finanask.ui.ResumoView
 import fiap.com.br.finanask.ui.adapter.ListaTransacoesAdapter
 import kotlinx.android.synthetic.main.activity_lista_transacoes.*
+import kotlinx.android.synthetic.main.resumo_card.*
 import java.math.BigDecimal
 
 class ListaTransacoesActivity : AppCompatActivity() {
@@ -16,6 +19,9 @@ class ListaTransacoesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_lista_transacoes)
 
         val transacoes = transacoesDeExemplo()
+
+        val view = window.decorView
+        ResumoView(view).adicionaReceitaNoResumo(transacoes)
 
 
         configuraLista(transacoes)
