@@ -20,25 +20,35 @@ class ResumoView(private val view: View,
 
     fun adicionaReceita() {
         val totalReceita = resumo.receita()
-        view.resumo_card_receita.setTextColor(corReceita)
-        view.resumo_card_receita.text = totalReceita.formataParaBrasileiro()
+        with(view.resumo_card_receita) {
+            setTextColor(corReceita)
+            text = totalReceita.formataParaBrasileiro()
+        }
     }
 
     fun adicionaDespesa() {
         val totalDespesa = resumo.despesa()
-        view.resumo_card_despesa.setTextColor(corDespesa)
-        view.resumo_card_despesa.text = totalDespesa.formataParaBrasileiro()
+        with(view.resumo_card_despesa) {
+            setTextColor(corDespesa)
+            text = totalDespesa.formataParaBrasileiro()
+        }
     }
 
     fun adicionaTotal() {
         val total = resumo.total()
-        if (total.compareTo(BigDecimal.ZERO) >= 0) {
-            view.resumo_card_total
-                    .setTextColor(corReceita)
-        } else {
-            view.resumo_card_total
-                    .setTextColor(corDespesa)
+        val cor = corPor(total)
+        with(view.resumo_card_total) {
+            setTextColor(cor)
+            text = total.formataParaBrasileiro()
         }
-        view.resumo_card_total.text = total.formataParaBrasileiro()
     }
+
+    private fun corPor(valor: BigDecimal): Int {
+        if (valor.compareTo(BigDecimal.ZERO) >= 0) {
+            return corReceita
+        }
+        return corDespesa
+
+    }
+    
 }
