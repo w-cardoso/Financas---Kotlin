@@ -6,7 +6,10 @@ import java.util.Locale
 
 fun BigDecimal.formataParaBrasileiro(): String {
     val formatoBrasileiro = DecimalFormat.getCurrencyInstance(Locale("pt", "br"))
-    val moedaFormatada = formatoBrasileiro.format(this).replace("R$", "R$ ")
+    val moedaFormatada = formatoBrasileiro.format(this)
+            .replace("R$", "R$ ")
+            .replace("-R$", "R$ -")
+
     return moedaFormatada
 
 }
