@@ -7,38 +7,19 @@ import java.math.BigDecimal
  */
 class Resumo(private val transacoes: List<Transacao>) {
 
-    fun receita(): BigDecimal {
-        /*var totalReceita = BigDecimal.ZERO
-        for (transacao in transacoes) {
-            if (transacao.tipo == Tipo.RECEITA) {
-                totalReceita = totalReceita.plus(transacao.valor)
-            }
-        }*/
+    val receita get() = somarPor(Tipo.RECEITA)
 
-        //utilizando expressões lambdas e funções anonimas
-        val somaDeReceita: Double = transacoes
-                .filter{ transacao -> transacao.tipo == Tipo.RECEITA }
-                .sumByDouble{ transacao -> transacao.valor.toDouble() }
-        return BigDecimal(somaDeReceita)
+    val despesa get() = somarPor(Tipo.DESPESA)
+
+    val total get() = receita.subtract(despesa)
+
+
+    fun somarPor(tipo: Tipo): BigDecimal {
+        val somaDeTransacaoPorTipo = transacoes
+                .filter { it.tipo == tipo }
+                .sumByDouble { it.valor.toDouble() }
+        return BigDecimal(somaDeTransacaoPorTipo)
     }
 
-    fun despesa(): BigDecimal {
-        /*var totalDespesa = BigDecimal.ZERO
-        for (transacao in transacoes) {
-            if (transacao.tipo == Tipo.DESPESA) {
-                totalDespesa = totalDespesa.plus(transacao.valor)
-            }
-        }*/
-
-        val somaDespesa: Double = transacoes
-                .filter { transacao -> transacao.tipo == Tipo.DESPESA }
-                .sumByDouble { transacao -> transacao.valor.toDouble() }
-
-        return BigDecimal(somaDespesa)
-    }
-
-    fun total () : BigDecimal{
-        return receita().subtract(despesa())
-    }
 
 }
