@@ -2,6 +2,7 @@ package fiap.com.br.finanask.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import fiap.com.br.finanask.R
 import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
@@ -21,11 +22,17 @@ class ListaTransacoesActivity : AppCompatActivity() {
         configuraResumo(transacoes)
 
         configuraLista(transacoes)
+
+        lista_transacoes_adiciona_receita
+                .setOnClickListener {
+                    Toast.makeText(this@ListaTransacoesActivity,
+                            "clique de receita", Toast.LENGTH_LONG).show();
+                }
     }
 
     private fun configuraResumo(transacoes: List<Transacao>) {
         val view = window.decorView
-        val resumoView = ResumoView(view, this,transacoes)
+        val resumoView = ResumoView(view, this, transacoes)
         resumoView.atualiza()
     }
 
