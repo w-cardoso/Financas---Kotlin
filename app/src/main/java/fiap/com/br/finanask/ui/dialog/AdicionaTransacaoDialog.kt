@@ -19,7 +19,7 @@ import java.math.BigDecimal
 import java.util.*
 
 
-class adicionaTransacaoDialog(private val viewGroup: ViewGroup,
+class AdicionaTransacaoDialog(private val viewGroup: ViewGroup,
                               private val context: Context) {
 
 
