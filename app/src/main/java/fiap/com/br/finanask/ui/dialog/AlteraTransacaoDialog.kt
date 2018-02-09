@@ -30,15 +30,17 @@ class AlteraTransacaoDialog(private val viewGroup: ViewGroup,
 
     fun chama(transacao: Transacao, transacaoDelegate: TransacaoDelegate) {
         val tipo = transacao.tipo
+
+        configuraCampoData()
+        configuraCampoCategoria(tipo)
+        configuraFormulario(tipo, transacaoDelegate)
+
+
         campoValor.setText(transacao.valor.toString())
         campoData.setText(transacao.data.formataBrasileiro())
         val categoriasRetornadas = context.resources.getStringArray(categoriaPor(tipo))
         val posicaoCategorias = categoriasRetornadas.indexOf(transacao.categoria)
         campoCategoria.setSelection(posicaoCategorias, true)
-
-        configuraCampoData()
-        configuraCampoCategoria(tipo)
-        configuraFormulario(tipo, transacaoDelegate)
     }
 
 
