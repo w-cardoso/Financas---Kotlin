@@ -49,7 +49,7 @@ class AlteraTransacaoDialog(private val viewGroup: ViewGroup,
         AlertDialog.Builder(context)
                 .setTitle(titulo)
                 .setView(viewCriada)
-                .setPositiveButton("Adiconar", { _, _ ->
+                .setPositiveButton("Alterar", { _, _ ->
 
                     val valorEmTexto = campoValor.text.toString()
                     val dataEmTexto = campoData.text.toString()
@@ -76,9 +76,9 @@ class AlteraTransacaoDialog(private val viewGroup: ViewGroup,
 
     private fun tituloPor(tipo: Tipo): Int {
         if (tipo == Tipo.RECEITA) {
-            return R.string.adiciona_receita
+            return R.string.altera_receita
         }
-        return R.string.adiciona_despesa
+        return R.string.altera_despesa
 
     }
 

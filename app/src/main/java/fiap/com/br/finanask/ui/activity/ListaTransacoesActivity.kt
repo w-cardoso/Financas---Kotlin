@@ -9,8 +9,8 @@ import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
 import fiap.com.br.finanask.ui.ResumoView
 import fiap.com.br.finanask.ui.adapter.ListaTransacoesAdapter
-import fiap.com.br.finanask.ui.dialog.AdicionaTransacaoDialog
 import fiap.com.br.finanask.ui.dialog.AlteraTransacaoDialog
+import fiap.com.br.finanask.ui.dialog.adicionaTransacaoDialog
 import kotlinx.android.synthetic.main.activity_lista_transacoes.*
 
 class ListaTransacoesActivity : AppCompatActivity() {
@@ -42,18 +42,18 @@ class ListaTransacoesActivity : AppCompatActivity() {
     }
 
     private fun chamaDialogDeAdicao(tipo: Tipo) {
-        AdicionaTransacaoDialog(window.decorView as ViewGroup, this)
+        adicionaTransacaoDialog(window.decorView as ViewGroup, this)
                 .configuraDialog(tipo, object : TransacaoDelegate {
                     override fun delegate(transacao: Transacao) {
-                        atualizaTransacoes(transacao)
+                        transacoes.add(transacao)
+                        atualizaTransacoes()
                         lista_transacoes_adiciona_menu.close(true)
                     }
 
                 })
     }
 
-    private fun atualizaTransacoes(transacao: Transacao) {
-        transacoes.add(transacao)
+    private fun atualizaTransacoes() {
         configuraLista()
         configuraResumo()
     }
@@ -71,7 +71,8 @@ class ListaTransacoesActivity : AppCompatActivity() {
             AlteraTransacaoDialog(window.decorView as ViewGroup, context = this)
                     .chama(transacao, object : TransacaoDelegate {
                         override fun delegate(transacao: Transacao) {
-                            atualizaTransacoes(transacao)
+                            transacoes[position] = transacao
+                            atualizaTransacoes()
                         }
 
                     })
