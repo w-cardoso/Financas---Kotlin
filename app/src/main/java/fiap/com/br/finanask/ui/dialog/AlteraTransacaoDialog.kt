@@ -43,7 +43,6 @@ class AlteraTransacaoDialog(private val viewGroup: ViewGroup,
         campoCategoria.setSelection(posicaoCategorias, true)
     }
 
-
     private fun configuraFormulario(tipo: Tipo, transacaoDelegate: TransacaoDelegate) {
 
         val titulo = tituloPor(tipo)
