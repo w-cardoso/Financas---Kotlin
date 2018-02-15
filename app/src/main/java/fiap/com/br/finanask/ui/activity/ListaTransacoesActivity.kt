@@ -44,7 +44,7 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
     private fun chamaDialogDeAdicao(tipo: Tipo) {
         adicionaTransacaoDialog(viewDaActivity as ViewGroup, this)
-                .configuraDialog(tipo, object : TransacaoDelegate {
+                .chama(tipo, object : TransacaoDelegate {
                     override fun delegate(transacao: Transacao) {
                         adicionaTransacao(transacao)
                         lista_transacoes_adiciona_menu.close(true)
