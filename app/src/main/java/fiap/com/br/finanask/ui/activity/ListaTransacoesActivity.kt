@@ -89,12 +89,16 @@ class ListaTransacoesActivity : AppCompatActivity() {
         if (idDoMenu == 1) {
             val adapterMenuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
             val posicaoDaTransacao = adapterMenuInfo.position
-            transacoes.removeAt(posicaoDaTransacao)
-            atualizaTransacoes()
+            remove(posicaoDaTransacao)
 
         }
 
         return super.onContextItemSelected(item)
+    }
+
+    private fun remove(posicaoDaTransacao: Int) {
+        transacoes.removeAt(posicaoDaTransacao)
+        atualizaTransacoes()
     }
 
     private fun chamaDialogDeAlteracao(transacao: Transacao, position: Int) {
