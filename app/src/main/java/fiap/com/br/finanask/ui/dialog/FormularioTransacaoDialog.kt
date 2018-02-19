@@ -18,9 +18,7 @@ import kotlinx.android.synthetic.main.form_transacao.view.*
 import java.math.BigDecimal
 import java.util.*
 
-/**
- * Created by re036086 on 15/02/2018.
- */
+
 abstract class FormularioTransacaoDialog(
         private val context: Context,
         private val viewGroup: ViewGroup) {
