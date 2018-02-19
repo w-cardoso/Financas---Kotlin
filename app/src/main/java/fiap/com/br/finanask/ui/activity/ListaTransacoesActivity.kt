@@ -2,7 +2,10 @@ package fiap.com.br.finanask.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.AdapterView
 import fiap.com.br.finanask.R
 import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
@@ -74,8 +77,24 @@ class ListaTransacoesActivity : AppCompatActivity() {
                 val transacao = transacoes[position]
                 chamaDialogDeAlteracao(transacao, position)
             }
+            setOnCreateContextMenuListener { menu, _, _ ->
+                menu.add(Menu.NONE, 1, Menu.NONE, "Remover")
+            }
 
         }
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        val idDoMenu = item?.itemId
+        if (idDoMenu == 1) {
+            val adapterMenuInfo = item.menuInfo as AdapterView.AdapterContextMenuInfo
+            val posicaoDaTransacao = adapterMenuInfo.position
+            transacoes.removeAt(posicaoDaTransacao)
+            atualizaTransacoes()
+
+        }
+
+        return super.onContextItemSelected(item)
     }
 
     private fun chamaDialogDeAlteracao(transacao: Transacao, position: Int) {
