@@ -28,15 +28,15 @@ abstract class FormularioTransacaoDialog(
     protected val campoData = viewCriada.form_transacao_data
     protected val campoCategoria = viewCriada.form_transacao_categoria
 
-    fun chama(tipo: Tipo, transacaoDelegate: TransacaoDelegate) {
+    fun chama(tipo: Tipo, delegate: (transacao: Transacao) -> Unit) {
         configuraCampoData()
         configuraCampoCategoria(tipo)
-        configuraFormulario(tipo, transacaoDelegate)
+        configuraFormulario(tipo, delegate)
     }
 
-    abstract protected val tituloBotaoPositivo : String
+    abstract protected val tituloBotaoPositivo: String
 
-    private fun configuraFormulario(tipo: Tipo, transacaoDelegate: TransacaoDelegate) {
+    private fun configuraFormulario(tipo: Tipo, delegate: (transacao: Transacao) -> Unit) {
 
         val titulo = tituloPor(tipo)
 
@@ -58,9 +58,8 @@ abstract class FormularioTransacaoDialog(
                             data = data,
                             categoria = categoriaEmTexto)
 
-                    transacaoDelegate.delegate(transacaoCriada)
-//                    atualizaTransacoes(transacaoCriada)
-//                    lista_transacoes_adiciona_menu.close(true)
+                    delegate(transacaoCriada)
+
 
 
                 })
@@ -69,7 +68,6 @@ abstract class FormularioTransacaoDialog(
     }
 
     abstract protected fun tituloPor(tipo: Tipo): Int
-
 
 
     private fun configuraCampoCategoria(tipo: Tipo) {

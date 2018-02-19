@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import fiap.com.br.finanask.R
-import fiap.com.br.finanask.delegate.TransacaoDelegate
 import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
 import fiap.com.br.finanask.ui.ResumoView
@@ -44,11 +43,10 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
     private fun chamaDialogDeAdicao(tipo: Tipo) {
         adicionaTransacaoDialog(viewDaActivity as ViewGroup, this)
-                .chama(tipo, object : TransacaoDelegate {
-                    override fun delegate(transacao: Transacao) {
-                        adicionaTransacao(transacao)
-                        lista_transacoes_adiciona_menu.close(true)
-                    }
+                .chama(tipo, {
+                    adicionaTransacao(it)
+                    lista_transacoes_adiciona_menu.close(true)
+
 
                 })
     }
@@ -82,10 +80,9 @@ class ListaTransacoesActivity : AppCompatActivity() {
 
     private fun chamaDialogDeAlteracao(transacao: Transacao, position: Int) {
         AlteraTransacaoDialog(viewDaActivity as ViewGroup, context = this)
-                .chama(transacao, object : TransacaoDelegate {
-                    override fun delegate(transacao: Transacao) {
-                        altera(transacao, position)
-                    }
+                .chama(transacao, {
+                    altera(it, position)
+
 
                 })
     }

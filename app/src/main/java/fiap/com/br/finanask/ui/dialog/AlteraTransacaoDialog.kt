@@ -3,7 +3,6 @@ package fiap.com.br.finanask.ui.dialog
 import android.content.Context
 import android.view.ViewGroup
 import fiap.com.br.finanask.R
-import fiap.com.br.finanask.delegate.TransacaoDelegate
 import fiap.com.br.finanask.extension.formataBrasileiro
 import fiap.com.br.finanask.model.Tipo
 import fiap.com.br.finanask.model.Transacao
@@ -15,9 +14,9 @@ class AlteraTransacaoDialog(
     override val tituloBotaoPositivo: String
         get() = "Alterar"
 
-    fun chama(transacao: Transacao, transacaoDelegate: TransacaoDelegate) {
+    fun chama(transacao: Transacao, delegate: (transacao:Transacao) -> Unit) {
         val tipo = transacao.tipo
-        super.chama(tipo, transacaoDelegate)
+        super.chama(tipo, delegate)
         inicializaCampos(transacao)
     }
 
